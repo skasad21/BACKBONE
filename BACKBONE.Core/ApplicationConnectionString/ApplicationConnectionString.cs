@@ -12,10 +12,10 @@ namespace BACKBONE.Core.ApplicationConnectionString
         {
             var connectionStrings = new Dictionary<int, string>
             {
-                //Test DB - Oracle
+                //Test DB - MSSQL
                 { 1, @"Server=DESKTOP-5RDL6ET\SAQSQL2019;Database=EpyDispatch;User Id=sa;Password=123;TrustServerCertificate=True;" },
                 //Muscat - Oracle
-                { 2, "User Id=PPL1;Password=ppl;Data Source=159.65.128.179:1521/PRAN;" }
+                { 2, "User Id=###;Password=###;Data Source=####:####/####;" }
             };
 
             if (connectionStrings.ContainsKey(dbId))
