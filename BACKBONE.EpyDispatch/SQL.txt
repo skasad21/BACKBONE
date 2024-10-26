@@ -1,0 +1,43 @@
+CREATE TABLE Users (
+    UserId INT PRIMARY KEY IDENTITY,
+    EmpCode NVARCHAR(100) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    FullName NVARCHAR(100) NULL
+);
+
+CREATE TABLE RefreshTokens (
+    TokenId INT PRIMARY KEY IDENTITY,
+    UserId INT FOREIGN KEY REFERENCES Users(UserId),
+    Token NVARCHAR(255) NOT NULL,
+    ExpirationDate DATETIME NOT NULL
+);
+
+
+
+-- Menus Table
+CREATE TABLE Menus (
+    MenuId INT PRIMARY KEY IDENTITY,
+    ParentId INT NULL, -- NULL for top-level menu items, points to another MenuId for submenus
+    Name NVARCHAR(100) NOT NULL,
+    Path NVARCHAR(255) NOT NULL, -- URL path for routing
+    ComponentName NVARCHAR(100) NOT NULL -- React component to render
+);
+
+-- User Permissions Table (to control what menus each user sees)
+CREATE TABLE UserPermissions (
+    PermissionId INT PRIMARY KEY IDENTITY,
+    UserId INT FOREIGN KEY REFERENCES Users(UserId),
+    MenuId INT FOREIGN KEY REFERENCES Menus(MenuId)
+);
+
+
+select * from RefreshTokens;
+delete from RefreshTokens;
+INSERT INTO Users (EmpCode, PasswordHash, FullName)
+VALUES 
+('EMP001', '$2b$12$8zgGCsddxyWI0i3lXFgmveS9jfyNbxtDFzYHcnJz4g4SqbTamg/g6', 'John Doe'),
+('EMP002', '$2b$12$4ChI0CSlhzB1CpKKvzVYBeAxwpMX0Umke4OQj38C5atkpVkrAA7xq', 'Jane Smith'),
+('EMP003', '$2b$12$Nq7re9wPfUNvVxIRHdEkPupXUVVRLk2m4d6v/Yf1soN3g6VyckMaC', 'Michael Johnson');
+
+
+--The passwords "password123", "admin@123", and "welcome2024" are securely hashed using
